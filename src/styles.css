@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: "Inter Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background: #fcfbff;
+    color: #0f1123;
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .font-display {
+    font-family: "Bricolage Grotesque Variable", "Inter Variable", system-ui, sans-serif;
+    font-optical-sizing: auto;
+  }
+
+  :focus-visible {
+    outline: 2px solid #7c3aed;
+    outline-offset: 3px;
+    border-radius: 8px;
+  }
+
+  ::selection {
+    background: #ffe14d;
+    color: #0f1123;
+  }
+}
+
+@layer utilities {
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+  .mask-fade-b {
+    -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent);
+    mask-image: linear-gradient(to bottom, #000 60%, transparent);
+  }
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/*
+ * Marca-texto: o elemento gráfico da marca. Uma passada de caneta amarela atrás de 1 a 3 palavras.
+ * O tamanho do fundo (--mk) é animado pelo componente <Highlight>; sem JS, fica cheio.
+ */
+.mk {
+  --mk: 100%;
+  background-image: linear-gradient(100deg, transparent 0 1.5%, #ffe14d 1.5% 97.5%, transparent 97.5%);
+  background-repeat: no-repeat;
+  background-size: var(--mk) 44%;
+  background-position: 0 90%;
+  padding: 0 0.06em;
+  margin: 0 -0.06em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* Permite animar --mk em CSS puro (abertura). */
+@property --mk {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@keyframes mk-sweep {
+  0% { --mk: 0%; color: #fff; }
+  35% { color: #0f1123; }
+  100% { --mk: 100%; color: #0f1123; }
+}
+.mk-anim {
+  animation: mk-sweep 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.65s both;
+}
+
+/* Em fundo escuro a caneta cobre a palavra inteira (texto em tinta por cima). */
+.mk.mk-full {
+  background-size: var(--mk) 80%;
+  background-position: 0 60%;
+}
+
+/* Grade de pontos bem leve, como papel de agenda */
+.bg-grid {
+  background-image: linear-gradient(rgba(124, 58, 237, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124, 58, 237, 0.07) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+/* Brilho de fundo sem filter: gradiente radial é quase de graça, blur de 120px não é. */
+.glow {
+  background: radial-gradient(closest-side, rgb(var(--glow) / var(--glow-a, 0.5)), rgb(var(--glow) / 0));
+}
+
+/* Animação infinita fora da tela fica em pausa (ver lib/visibility.ts). */
+.anim-paused,
+.anim-paused * {
+  animation-play-state: paused !important;
+}
+
+@keyframes marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 48s linear infinite;
+  will-change: transform;
+}

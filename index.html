@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Marcaki | Agendamento online para salão, barbearia e clínica de estética</title>
+    <meta
+      name="description"
+      content="Sua página de agendamento online: o cliente marca sozinho no horário livre, recebe confirmação e lembrete pelo WhatsApp e a agenda se organiza. R$ 49,90/mês, 14 dias grátis, sem cartão."
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#7c3aed" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="canonical" href="https://marcaki.app/" />
+    <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
+    <link rel="icon" type="image/png" sizes="48x48" href="%BASE_URL%favicon-48.png" />
+    <link rel="apple-touch-icon" href="%BASE_URL%apple-touch-icon.png" />
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="Marcaki" />
+    <meta property="og:title" content="Marcaki — sua agenda cheia sem responder WhatsApp o dia inteiro" />
+    <meta property="og:description" content="Página de agendamento online para salões, barbearias e clínicas de estética. O cliente marca sozinho e recebe lembrete no WhatsApp. 14 dias grátis, sem cartão." />
+    <meta property="og:url" content="https://marcaki.app/" />
+    <meta property="og:image" content="https://marcaki.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Marcaki: Marcou, tá marcado. Agenda online para salão, barbearia e estética." />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Consent Mode v2 (LGPD): tudo negado até o visitante aceitar no aviso de cookies -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("consent", "default", {
+        ad_storage: "denied",
+        ad_user_data: "denied",
+        ad_personalization: "denied",
+        analytics_storage: "denied",
+        personalization_storage: "denied",
+        functionality_storage: "granted",
+        security_storage: "granted",
+        wait_for_update: 500,
+      });
+      gtag("set", "url_passthrough", true);
+      gtag("set", "ads_data_redaction", true);
+      try {
+        if (localStorage.getItem("marcaki-consent") === "granted") {
+          gtag("consent", "update", { ad_storage: "granted", ad_user_data: "granted", ad_personalization: "granted", analytics_storage: "granted", personalization_storage: "granted" });
+        }
+      } catch (e) {}
+    </script>
+
+    <!--
+      Google Tag Manager — só carrega no domínio de produção (marcaki.app), para que prévias
+      (GitHub Pages, localhost) não mandem visitas para o GA4. Para testar numa prévia: ?gtm_debug=x ou ?track=1.
+      O ID vem de VITE_GTM_ID (.env). Enquanto for GTM-XXXXXXX, nada carrega. A medição entra só depois
+      de o site ser aprovado (ver TRACKING.md).
+    -->
+    <script>
+      (function (w, d, s, l, i) {
+        var prod = /(^|\.)marcaki\.app$/.test(w.location.hostname);
+        var debug = /[?&](gtm_debug|track)=/.test(w.location.search);
+        w[l] = w[l] || [];
+        if ((!prod && !debug) || !/^GTM-[A-Z0-9]+$/.test(i) || /^GTM-X+$/.test(i)) return;
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0], j = d.createElement(s);
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "%VITE_GTM_ID%");
+    </script>
+
+    <!--structured-data-->
+    <noscript><style>.mk-preloader{display:none!important}</style></noscript>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
