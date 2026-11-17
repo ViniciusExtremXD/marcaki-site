@@ -7,7 +7,7 @@ export function Audience() {
     <section id="para-quem" className="relative py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl">
-          <SlotLabel time="10:30">Para quem é</SlotLabel>
+          <SlotLabel time="10:00">Para quem é</SlotLabel>
           <h2 className="font-display mt-5 text-4xl font-extrabold leading-[1.02] tracking-tightest text-tinta sm:text-5xl lg:text-6xl">
             <SplitWords text="Para quem atende com ==as mãos ocupadas.==" />
           </h2>

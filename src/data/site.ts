@@ -57,9 +57,9 @@ export function pushEvent(event: string, params: Record<string, string | number 
 }
 
 export const NAV_LINKS = [
+  { href: "#a-conta", label: "Faça a conta" },
+  { href: "#solucao", label: "Como resolve" },
   { href: "#como-funciona", label: "Como funciona" },
-  { href: "#recursos", label: "Recursos" },
-  { href: "#para-quem", label: "Para quem" },
   { href: "#preco", label: "Preço" },
   { href: "#perguntas", label: "Perguntas" },
 ];
@@ -78,19 +78,32 @@ export const DEMO_BUSINESS = {
   ],
 };
 
-export const BEFORE = [
-  "Cliente manda mensagem e você para o que está fazendo para responder",
-  "Horário decorado ou anotado no caderno, fácil de duplicar",
-  "Cliente esquece o horário e não avisa que não vem",
-  "Você só descobre um horário livre quando alguém pergunta",
+/* O que a agenda no improviso custa (seção "A conta"). Sem número inventado: os valores vêm da calculadora, com os números do visitante. */
+export const PAINS = [
+  {
+    id: "parado",
+    title: "Atendimento parado",
+    text: "Cada “tem horário?” tira você da cadeira: seca a mão, procura no caderno, responde. Várias vezes por dia.",
+  },
+  {
+    id: "vazio",
+    title: "Horário vazio",
+    text: "O cliente esquece, não avisa, e aquele horário que podia ser de outra pessoa vira prejuízo.",
+  },
+  {
+    id: "desiste",
+    title: "Cliente que desiste",
+    text: "Quem pergunta às 23h e só recebe resposta no dia seguinte muitas vezes já marcou em outro lugar.",
+  },
 ];
 
-export const AFTER = [
-  "Cliente agenda sozinho pela sua página, a qualquer hora do dia",
-  "A grade é calculada automaticamente, sem conflito de horário",
-  "Confirmação e lembrete chegam pelo WhatsApp sem você mexer em nada",
-  "Você abre a agenda e já sabe quem vem, quando e para quê",
-];
+/* Premissas da calculadora (ditas na própria seção). */
+export const CALC = {
+  weeksPerMonth: 4,
+  workDaysPerMonth: 24, // 6 dias por semana
+  minutesPerChat: 2,
+  defaults: { ticket: 60, noShows: 3, chats: 15 },
+};
 
 export const CHAOS_MESSAGES = [
   { who: "Ana", text: "Oi, tem horário amanhã?", time: "09:12" },
@@ -119,32 +132,34 @@ export const STEPS = [
   },
 ];
 
-export const FEATURES = {
-  whatsapp: {
-    title: "Confirmação e lembrete automático por WhatsApp",
-    text: "O cliente recebe a confirmação assim que agenda e um lembrete antes do horário, sem você precisar digitar nada. 100 envios grátis por mês inclusos no plano.",
+/* Como o Marcaki resolve: cada linha diz qual dor some e mostra o produto funcionando. */
+export const SOLUTIONS = {
+  selfBooking: {
+    solves: ["Atendimento parado", "Cliente que desiste"],
+    title: "Seu cliente marca sozinho, ==a qualquer hora.==",
+    text: "Uma página de agendamento com o nome do seu negócio. O cliente escolhe o serviço, vê só os horários livres e marca com nome e telefone. Sem baixar aplicativo e sem esperar você responder.",
+    gain: "Você atende sem interrupção, e quem quer marcar de madrugada marca com você.",
   },
-  slots: {
-    title: "Horários que existem de verdade",
-    text: "A grade é calculada a partir do seu expediente menos o que já está marcado. Nada de horário em dobro.",
+  reminders: {
+    solves: ["Horário vazio"],
+    title: "Confirmação e lembrete no WhatsApp, ==sem você digitar.==",
+    text: "Assim que marca, o cliente recebe a confirmação. Antes do horário, recebe o lembrete. Tudo automático, com 100 envios grátis por mês no plano.",
+    gain: "Cliente lembrado não esquece, e o seu horário não fica parado à toa.",
   },
-  noAccount: {
-    title: "Agendamento sem conta",
-    text: "O cliente marca com nome e telefone. Quem quiser criar conta ganha histórico e cancelamento pelo site.",
-  },
-  team: {
-    title: "Agenda por profissional",
-    text: "Cada pessoa da equipe tem a própria agenda, e pode ter um horário diferente do horário da loja.",
-  },
-  support: {
-    title: "Suporte com triagem por IA",
-    text: "Dúvidas de uso recebem resposta na hora. O que precisa de gente vai direto para a fila humana.",
-  },
-  lgpd: {
-    title: "Seus dados protegidos",
-    text: "Seus dados e os dos seus clientes protegidos, em conformidade com a LGPD.",
+  agenda: {
+    solves: ["Caderno", "Horário em dobro"],
+    title: "Uma agenda que ==não dá furo.==",
+    text: "A grade sai do seu expediente menos o que já está marcado, então ninguém marca no mesmo horário. Cada profissional tem a própria agenda, com horário próprio se precisar.",
+    gain: "Você abre o celular e já sabe quem vem, quando e para quê.",
   },
 };
+
+export const EXTRAS = [
+  { id: "pagina", title: "Página com o nome do seu negócio" },
+  { id: "semapp", title: "Sem app e sem conta para o cliente" },
+  { id: "suporte", title: "Suporte com IA e fila humana" },
+  { id: "lgpd", title: "Dados protegidos pela LGPD" },
+];
 
 export type Audience = {
   id: string;
@@ -174,8 +189,8 @@ export const AUDIENCES: Audience[] = [
   {
     id: "barbearias",
     label: "Barbearias",
-    title: "Sem largar a máquina para responder “tem horário?”.",
-    text: "Atendimento curto e cliente fixo pedem agenda rápida. Link na bio, o cliente marca de madrugada e você vê tudo pela manhã.",
+    title: "Cliente fixo marca o próximo corte sem te chamar.",
+    text: "Atendimento curto pede agenda rápida. Link na bio, o cliente marca de madrugada e você começa o dia sabendo quem vem, sem largar a máquina.",
     services: ["Corte", "Barba", "Sobrancelha", "Pezinho"],
     image: "barbearia",
     alt: "Barbeiro fazendo a barba de um cliente com navalha",

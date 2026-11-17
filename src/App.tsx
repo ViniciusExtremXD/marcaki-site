@@ -6,10 +6,9 @@ import { pushEvent } from "./data/site";
 import { CookieNotice, MobileBar, Nav, Preloader, ScrollProgress } from "./components/chrome";
 import { Hero } from "./sections/Hero";
 import { Ticker } from "./sections/Ticker";
-import { BeforeAfter } from "./sections/BeforeAfter";
-import { Manifesto } from "./sections/Manifesto";
+import { Conta } from "./sections/Conta";
+import { Solucao } from "./sections/Solucao";
 import { HowItWorks } from "./sections/HowItWorks";
-import { Features } from "./sections/Features";
 import { Audience } from "./sections/Audience";
 import { Pricing } from "./sections/Pricing";
 import { Faq } from "./sections/Faq";
@@ -57,10 +56,9 @@ export default function App() {
       <main>
         <Hero ready={ready} />
         <Ticker />
-        <BeforeAfter />
-        <Manifesto />
+        <Conta />
+        <Solucao />
         <HowItWorks />
-        <Features />
         <Audience />
         <Pricing />
         <Faq />

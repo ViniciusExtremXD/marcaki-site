@@ -1,8 +1,8 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { CheckCircle, Bell } from "@phosphor-icons/react";
+import { CheckCircle, Moon } from "@phosphor-icons/react";
 import { PRICE } from "../data/site";
-import { EASE_OUT, SplitWords, TiltCard } from "../components/motion";
+import { EASE_OUT, SplitWords, TiltCard, useCycle } from "../components/motion";
 import { DemoCta, PrimaryCta } from "../components/cta";
 import { BookingFlow, ChatBubble, PhoneFrame } from "../components/product";
 
@@ -37,7 +37,7 @@ export function Hero({ ready }: { ready: boolean }) {
           </motion.p>
 
           <h1 className="font-display mt-6 text-[2.6rem] font-extrabold leading-[0.98] tracking-tightest text-tinta min-[400px]:text-[2.95rem] sm:text-6xl lg:text-[4.6rem] xl:text-[5.1rem]">
-            <SplitWords text="Sua agenda cheia ==sem responder WhatsApp== o dia inteiro." immediate={ready} delay={0.1} />
+            <SplitWords text="Sua agenda enche sozinha. ==Você só atende.==" immediate={ready} delay={0.1} />
           </h1>
 
           <motion.p
@@ -46,7 +46,7 @@ export function Hero({ ready }: { ready: boolean }) {
             animate={ready ? { opacity: 1, y: 0 } : undefined}
             transition={{ duration: 0.8, delay: 0.55, ease: EASE_OUT }}
           >
-            O Marcaki dá ao seu negócio uma página de agendamento própria. Você manda o link, o cliente escolhe o horário que está livre de verdade, recebe confirmação e lembrete pelo WhatsApp, e a agenda se organiza sozinha.
+            Seu cliente marca pelo link a qualquer hora, recebe confirmação e lembrete no WhatsApp e não esquece. Você para de perder atendimento por mensagem sem resposta, por cliente que faltou e por horário anotado errado.
           </motion.p>
 
           <motion.div
@@ -105,20 +105,42 @@ export function Hero({ ready }: { ready: boolean }) {
             </AnimatePresence>
           </div>
 
-          {/* Chip do lembrete, flutuando */}
+          {/* Agendamentos fora do expediente, flutuando */}
           <div className="absolute -left-1 bottom-[12%] sm:-left-8">
-            <div className="animate-float flex items-center gap-2 rounded-2xl border border-linha bg-white px-3 py-2 shadow-card">
-              <span className="grid h-8 w-8 place-items-center rounded-full bg-marca text-tinta">
-                <Bell weight="fill" className="h-4 w-4" />
-              </span>
-              <span className="text-[12px] leading-tight">
-                <b className="block text-tinta">Lembrete automático</b>
-                <span className="text-tinta-2">antes do horário</span>
-              </span>
-            </div>
+            <NightChip />
           </div>
         </motion.div>
       </div>
     </section>
+  );
+}
+
+const NIGHT = [
+  { time: "23:47", text: "com o salão fechado" },
+  { time: "06:12", text: "antes de você acordar" },
+  { time: "Dom", text: "no seu dia de folga" },
+];
+
+/* O ganho que ninguém vê: gente marcando quando você não poderia responder. */
+function NightChip() {
+  const ref = useRef<HTMLDivElement>(null);
+  const step = useCycle(ref, [3000, 3000, 3000]);
+  const n = NIGHT[step];
+  return (
+    <div ref={ref} className="animate-float flex items-center gap-2 rounded-2xl border border-linha bg-white px-3 py-2 shadow-card">
+      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-roxo-900 text-marca">
+        <Moon weight="fill" className="h-4 w-4" />
+      </span>
+      <span className="relative block h-[30px] w-[150px] overflow-hidden text-[12px] leading-tight">
+        <AnimatePresence mode="popLayout" initial={false}>
+          <motion.span key={n.time} className="absolute inset-0" initial={{ y: 24, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -24, opacity: 0 }} transition={{ duration: 0.5, ease: EASE_OUT }}>
+            <b className="block text-tinta">
+              Marcado <span className="tnum">{n.time === "Dom" ? "no domingo" : `às ${n.time}`}</span>
+            </b>
+            <span className="text-tinta-2">{n.text}</span>
+          </motion.span>
+        </AnimatePresence>
+      </span>
+    </div>
   );
 }

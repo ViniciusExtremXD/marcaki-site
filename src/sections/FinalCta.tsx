@@ -23,7 +23,7 @@ export function FinalCta() {
           <span className="font-display text-lg font-bold">Tá marcado</span>
         </motion.div>
         <h2 className="font-display mt-8 text-balance text-4xl font-extrabold leading-[1.02] tracking-tightest text-tinta sm:text-6xl lg:text-7xl">
-          <SplitWords text="Pronto para parar de anotar horário ==no caderno?==" />
+          <SplitWords text="Seu próximo cliente pode ==marcar hoje à noite.==" />
         </h2>
         <Reveal>
           <p className="mx-auto mt-6 max-w-xl text-[17px] leading-relaxed text-tinta-2 sm:text-lg">

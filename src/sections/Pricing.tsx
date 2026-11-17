@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Check } from "@phosphor-icons/react";
 import { INCLUDED, PRICE, pushEvent } from "../data/site";
+import { calcResults, useCalc } from "../lib/calc-store";
 import { Counter, Reveal, SlotLabel, SplitWords } from "../components/motion";
 import { PrimaryCta } from "../components/cta";
 
@@ -11,6 +12,8 @@ type Billing = "mensal" | "anual";
 export function Pricing() {
   const [billing, setBilling] = useState<Billing>("mensal");
   const yearly = billing === "anual";
+  const calc = useCalc();
+  const { payback } = calcResults(calc);
 
   const choose = (b: Billing) => {
     if (b === billing) return;
@@ -28,11 +31,11 @@ export function Pricing() {
             Preço
           </SlotLabel>
           <h2 className="font-display mt-5 text-4xl font-extrabold leading-[1.02] tracking-tightest sm:text-5xl lg:text-6xl">
-            <SplitWords text="Um preço só. Tudo dentro. ==Sai quando quiser.==" wordClassName="text-white" />
+            <SplitWords text="Se paga com ==os horários que você salva.==" wordClassName="text-white" dark />
           </h2>
           <Reveal>
             <p className="mt-5 max-w-md text-[17px] leading-relaxed text-roxo-100">
-              Plano único, com tudo incluso. Teste {PRICE.trialDays} dias grátis, sem cartão de crédito. Sem taxa de adesão, sem fidelidade e sem multa para cancelar.
+              Plano único, com tudo incluso. Um ou dois horários salvos no mês já pagam o plano. Teste {PRICE.trialDays} dias grátis, sem cartão de crédito, sem fidelidade e sem multa para cancelar.
             </p>
           </Reveal>
         </div>
@@ -83,6 +86,14 @@ export function Pricing() {
                 )}
               </p>
             </div>
+
+            <a href="#a-conta" className="mt-5 flex items-center gap-3 rounded-2xl bg-marca/60 px-4 py-3 text-[14px] leading-snug text-tinta transition-colors hover:bg-marca">
+              <span className="font-display tnum grid h-9 w-9 shrink-0 place-items-center rounded-full bg-tinta text-[15px] font-extrabold text-marca">{payback}</span>
+              <span>
+                Com atendimento médio de <b className="tnum">R$ {calc.ticket.toLocaleString("pt-BR")}</b>, {payback === 1 ? "um atendimento paga" : `${payback} atendimentos pagam`} o mês.{" "}
+                <span className="font-semibold text-roxo-700 underline decoration-roxo-300 underline-offset-2">Refazer a conta</span>
+              </span>
+            </a>
 
             <ul className="mt-7 grid gap-3 border-t border-linha pt-7">
               {INCLUDED.map((t) => (

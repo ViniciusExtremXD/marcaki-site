@@ -36,10 +36,10 @@ export function HowItWorks() {
         <div className="max-w-3xl">
           <SlotLabel time="09:30">Como funciona</SlotLabel>
           <h2 className="font-display mt-5 text-4xl font-extrabold leading-[1.02] tracking-tightest text-tinta sm:text-5xl lg:text-6xl">
-            <SplitWords text="Três passos e ==sua página está no ar.==" />
+            <SplitWords text="No ar hoje, ==em cinco minutos.==" />
           </h2>
           <Reveal>
-            <p className="mt-5 max-w-xl text-[17px] leading-relaxed text-tinta-2">Tudo pelo celular, em menos de cinco minutos. Sem instalação e sem curva de aprendizado.</p>
+            <p className="mt-5 max-w-xl text-[17px] leading-relaxed text-tinta-2">Três passos, tudo pelo celular. Sem instalação, sem curva de aprendizado e sem precisar de ninguém para configurar.</p>
           </Reveal>
         </div>
 

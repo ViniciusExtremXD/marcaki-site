@@ -18,7 +18,7 @@ npm run deploy:gh    # publica a prévia no GitHub Pages (base /marcaki-site/)
 
 ```
 src/data/site.ts          todo o conteúdo: links do app, preço, recursos, público, FAQ (respostas reais do site atual)
-src/sections/*            uma seção por arquivo (Hero, Ticker, BeforeAfter, Manifesto, HowItWorks, Features, Audience, Pricing, Faq, FinalCta, Footer)
+src/sections/*            uma seção por arquivo (Hero, Ticker, Conta [dor + calculadora], Solucao [como resolve], HowItWorks, Audience, Pricing, Faq, FinalCta, Footer)
 src/components/motion     animações reutilizáveis (SplitWords, Highlight, ScrollLitText, VelocityMarquee, ParallaxImage, ClipReveal, TiltCard, Magnetic, Counter, useCycle)
 src/components/product    mockups do produto em React: fluxo de agendamento, mensagens de confirmação/lembrete, agenda da equipe, telas do dono
 src/components/chrome     abertura, menu, barra de progresso, barra fixa no celular, aviso de cookies (Consent Mode v2)

@@ -14,15 +14,16 @@ Mesmo desenho do projeto da Crescer: o site só envia eventos ao `dataLayer`; to
 | `cta_click` | qualquer CTA (cadastro, exemplo, entrar) | `cta` (`signup`/`demo`/`login`), `location` |
 | **`begin_signup`** | clique que leva a `/conta/cadastro` | `location` |
 | `view_demo` | clique na página de exemplo | `location` |
+| `calculator_use` | primeira vez que mexe na calculadora ("A conta") | `field` (`ticket`/`noShows`/`chats`) |
 | `pricing_toggle` | troca mensal/anual | `billing` (`mensal`/`anual`) |
 | `faq_open` | abre uma pergunta | `question` (número) |
 | `section_view` | seção vista pela 1ª vez | `section_id` |
 | `consent_update` | Aceitar/Recusar | `consent_state` |
 | `maverick_click` | crédito da Maverick no rodapé | `location` |
 
-`location`: `nav`, `menu_mobile`, `hero`, `como_funciona`, `preco`, `cta_final`, `rodape`, `barra_mobile`.
+`location`: `nav`, `menu_mobile`, `hero`, `a_conta`, `solucao`, `como_funciona`, `preco`, `cta_final`, `rodape`, `barra_mobile`.
 
-Nenhum evento leva dado pessoal. Os links são `<a>` reais com `data-cta` e `data-cta-location`.
+Nenhum evento leva dado pessoal (os valores da calculadora não são enviados). Os links são `<a>` reais com `data-cta` e `data-cta-location`.
 
 ## Pendência com a Maverick
 

@@ -88,6 +88,7 @@ export function SplitWords({
   delay = 0,
   stagger = 0.055,
   immediate = false,
+  dark = false,
 }: {
   text: string;
   className?: string;
@@ -95,6 +96,8 @@ export function SplitWords({
   delay?: number;
   stagger?: number;
   immediate?: boolean;
+  /** Fundo escuro: a caneta cobre a palavra inteira e o texto marcado fica em tinta. */
+  dark?: boolean;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "0px 0px -10% 0px" });
@@ -116,7 +119,7 @@ export function SplitWords({
             <React.Fragment key={`${pi}-${wi}`}>
               <span aria-hidden className="inline-block overflow-hidden pb-[0.14em] align-bottom">
                 <motion.span
-                  className={`inline-block ${wordClassName ?? ""}`}
+                  className={`inline-block ${dark && part.marked ? "text-tinta" : wordClassName ?? ""}`}
                   initial={{ y: "115%", rotate: 4 }}
                   animate={show ? { y: "0%", rotate: 0 } : undefined}
                   transition={{ duration: 1.0, ease: EASE_OUT, delay: delay + i * stagger }}
@@ -131,7 +134,9 @@ export function SplitWords({
         if (!part.marked) return <React.Fragment key={pi}>{words}</React.Fragment>;
         return (
           <React.Fragment key={pi}>
-            <Highlight delay={delay + index * stagger + 0.25}>{words}</Highlight>{" "}
+            <Highlight delay={delay + index * stagger + 0.25} className={dark ? "mk-full" : undefined}>
+              {words}
+            </Highlight>{" "}
           </React.Fragment>
         );
       })}
