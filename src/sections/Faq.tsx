@@ -2,21 +2,20 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Plus } from "@phosphor-icons/react";
 import { FAQ, pushEvent } from "../data/site";
-import { EASE_OUT, Reveal, SlotLabel, SplitWords } from "../components/motion";
+import { EASE_OUT, Lines, Reveal } from "../components/motion";
 
 /* Respostas reais do site atual (marcaki.app). */
 export function Faq() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section id="perguntas" className="relative py-24 sm:py-32">
-      <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16 lg:px-8">
-        <div className="min-w-0">
-          <SlotLabel time="11:30">Perguntas</SlotLabel>
-          <h2 className="font-display mt-5 text-4xl font-extrabold leading-[1.02] tracking-tightest text-tinta sm:text-5xl">
-            <SplitWords text="O que todo mundo ==pergunta antes.==" />
+    <section id="perguntas" className="relative py-24 sm:py-32 lg:py-36">
+      <div className="container-x grid grid-cols-[minmax(0,1fr)] gap-12 lg:grid-cols-12 lg:gap-8">
+        <div className="min-w-0 lg:col-span-4">
+          <h2 className="font-display text-[2.35rem] font-normal leading-[1.04] tracking-[-0.02em] text-tinta sm:text-5xl">
+            <Lines lines={["Perguntas", "frequentes"]} />
           </h2>
         </div>
-        <div className="min-w-0 border-t border-linha">
+        <div className="min-w-0 border-t border-linha lg:col-span-7 lg:col-start-6">
           {FAQ.map((f, i) => {
             const isOpen = open === i;
             return (
@@ -31,12 +30,10 @@ export function Faq() {
                         setOpen(isOpen ? null : i);
                         if (!isOpen) pushEvent("faq_open", { question: i + 1 });
                       }}
-                      className="flex w-full items-center justify-between gap-6 py-6 text-left"
+                      className="group flex w-full items-start justify-between gap-6 py-7 text-left"
                     >
-                      <span className="font-display text-xl font-bold leading-snug tracking-tight text-tinta sm:text-2xl">{f.q}</span>
-                      <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-full border transition-colors duration-300 ${isOpen ? "border-roxo-600 bg-roxo-600 text-white" : "border-linha text-tinta"}`}>
-                        <Plus weight="bold" className={`h-4 w-4 transition-transform duration-500 ${isOpen ? "rotate-45" : ""}`} />
-                      </span>
+                      <span className="font-display text-[1.4rem] leading-snug tracking-[-0.01em] text-tinta sm:text-[1.6rem]">{f.q}</span>
+                      <Plus weight="light" className={`mt-1.5 h-5 w-5 shrink-0 text-tinta transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${isOpen ? "rotate-45" : ""}`} />
                     </button>
                   </h3>
                   <AnimatePresence initial={false}>
@@ -49,7 +46,7 @@ export function Faq() {
                         transition={{ duration: 0.5, ease: EASE_OUT }}
                         className="overflow-hidden"
                       >
-                        <p className="max-w-2xl pb-7 text-[17px] leading-relaxed text-tinta-2">{f.a}</p>
+                        <p className="max-w-2xl pb-8 text-[17px] leading-relaxed text-tinta-2">{f.a}</p>
                       </motion.div>
                     )}
                   </AnimatePresence>

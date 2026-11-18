@@ -178,7 +178,7 @@ export const AUDIENCES: Audience[] = [
   {
     id: "saloes",
     label: "Salões de beleza",
-    title: "Enquanto você faz a escova, a agenda se preenche.",
+    title: "Enquanto você atende, a agenda se preenche.",
     text: "Corte, coloração, escova e manicure, cada um com a duração certa. A cliente vê só o horário que cabe o serviço que ela escolheu.",
     services: ["Escova", "Coloração", "Corte", "Manicure"],
     image: "salao",

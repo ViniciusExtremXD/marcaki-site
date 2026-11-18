@@ -3,7 +3,7 @@
 Site institucional/de vendas do **Marcaki** (página de agendamento online para salões, barbearias e clínicas de estética, da Maverick Software Solutions).
 Mesma stack dos sites da Crescer e da Extin Seven: **Vite + React + TypeScript + Tailwind + framer-motion + Lenis + Phosphor**, com HTML pré-renderizado no build (SEO).
 
-Direção de marca: Livro da Marca Marcaki (assinatura "Marcou, tá marcado.", roxo #7C3AED + amarelo marca-texto #FFE14D, Bricolage Grotesque nos títulos e Inter no texto).
+Direção visual (v2, 18/11/2026): institucional, com acabamento de banco. Títulos em Newsreader (serifa), texto em Hanken Grotesk, linhas finas, superfícies branco e névoa (#F5F4F8), roxo #7C3AED só em destaque e noite (#170D33) nas seções escuras. Assinatura "Marcou, tá marcado." no rodapé. Substitui a tipografia Bricolage/Inter do Livro da Marca no site.
 
 ## Comandos
 

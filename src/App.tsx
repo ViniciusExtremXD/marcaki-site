@@ -1,11 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { MotionConfig } from "framer-motion";
 import { bindAnchorLinks, initSmoothScroll } from "./lib/smooth-scroll";
 import { pauseOffscreenAnimations } from "./lib/visibility";
 import { pushEvent } from "./data/site";
-import { CookieNotice, MobileBar, Nav, Preloader, ScrollProgress } from "./components/chrome";
+import { CookieNotice, MobileBar, Nav } from "./components/chrome";
 import { Hero } from "./sections/Hero";
-import { Ticker } from "./sections/Ticker";
 import { Conta } from "./sections/Conta";
 import { Solucao } from "./sections/Solucao";
 import { HowItWorks } from "./sections/HowItWorks";
@@ -17,9 +16,9 @@ import { Footer } from "./sections/Footer";
 
 export default function App() {
   const [ready, setReady] = useState(false);
-  const onIntroDone = useCallback(() => setReady(true), []);
 
   useEffect(() => {
+    setReady(true);
     const stopScroll = initSmoothScroll();
     const unbind = bindAnchorLinks();
     const stopPause = pauseOffscreenAnimations();
@@ -50,12 +49,9 @@ export default function App() {
   return (
     // Movimento é parte da proposta; muitos PCs Windows informam "reduzir movimento" só por terem efeitos desligados.
     <MotionConfig reducedMotion="never">
-      <Preloader onDone={onIntroDone} />
-      <ScrollProgress />
       <Nav />
       <main>
         <Hero ready={ready} />
-        <Ticker />
         <Conta />
         <Solucao />
         <HowItWorks />

@@ -23,19 +23,23 @@ export default {
           DEFAULT: "#FFE14D",
           soft: "#FFF1A6",
         },
+        /* Sistema institucional: tinta quase preta violeta, névoa para superfícies alternadas, linhas finas */
         tinta: {
-          DEFAULT: "#0F1123",
-          2: "#4A4763",
-          3: "#7B7794",
+          DEFAULT: "#15122B",
+          2: "#55516B",
+          3: "#8A8699",
         },
-        linha: "#E4DEF5",
-        papel: "#FCFBFF",
+        linha: "#E6E3EC",
+        papel: "#FFFFFF",
+        nevoa: "#F5F4F8",
+        noite: "#170D33",
         ok: "#15803D",
         furo: "#DC2626",
       },
       fontFamily: {
-        display: ['"Bricolage Grotesque Variable"', '"Inter Variable"', "system-ui", "sans-serif"],
-        sans: ['"Inter Variable"', "system-ui", "-apple-system", '"Segoe UI"', "sans-serif"],
+        display: ['"Newsreader Variable"', "Georgia", "serif"],
+        sans: ['"Hanken Grotesk Variable"', "system-ui", "-apple-system", '"Segoe UI"', "sans-serif"],
+        ui: ['"Hanken Grotesk Variable"', "system-ui", "-apple-system", '"Segoe UI"', "sans-serif"],
       },
       letterSpacing: {
         tightest: "-0.045em",
@@ -46,12 +50,13 @@ export default {
         "4xl": "2rem",
       },
       /* Sombras em camadas, tingidas de roxo noite (nunca preto puro) */
+      /* Sombras discretas, uma camada só: o acabamento vem das linhas finas, não de sombra */
       boxShadow: {
-        soft: "0 1px 2px rgba(42,16,101,0.05), 0 6px 16px -8px rgba(42,16,101,0.12)",
-        card: "0 1px 2px rgba(42,16,101,0.05), 0 8px 20px -10px rgba(42,16,101,0.14), 0 24px 48px -28px rgba(42,16,101,0.22)",
-        lift: "0 1px 3px rgba(42,16,101,0.06), 0 14px 30px -14px rgba(42,16,101,0.22), 0 40px 80px -40px rgba(42,16,101,0.35)",
-        phone: "0 2px 6px rgba(42,16,101,0.10), 0 30px 60px -20px rgba(42,16,101,0.45), 0 60px 120px -60px rgba(42,16,101,0.5)",
-        roxo: "0 10px 24px -10px rgba(124,58,237,0.55)",
+        soft: "0 1px 2px rgba(21,18,43,0.04), 0 4px 12px -6px rgba(21,18,43,0.08)",
+        card: "0 1px 2px rgba(21,18,43,0.04), 0 12px 32px -16px rgba(21,18,43,0.16)",
+        lift: "0 1px 2px rgba(21,18,43,0.05), 0 24px 48px -24px rgba(21,18,43,0.22)",
+        phone: "0 1px 2px rgba(21,18,43,0.08), 0 40px 80px -36px rgba(21,18,43,0.45)",
+        roxo: "0 8px 20px -10px rgba(124,58,237,0.45)",
       },
       keyframes: {
         "pulse-ring": {

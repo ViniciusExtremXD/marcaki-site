@@ -1,109 +1,108 @@
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useInView } from "framer-motion";
 import { STEPS } from "../data/site";
-import { EASE_OUT, Reveal, SlotLabel, SplitWords } from "../components/motion";
+import { EASE_OUT, Reveal, SectionHead } from "../components/motion";
 import { OwnerScreenServices, OwnerScreenShare, OwnerScreenSignup, PhoneFrame } from "../components/product";
 import { PrimaryCta } from "../components/cta";
 
 const SCREENS = [OwnerScreenSignup, OwnerScreenServices, OwnerScreenShare];
+const STEP_MS = 4800;
 
 /*
- * Palco fixo: no desktop o celular fica parado e troca de tela conforme o passo que está no meio da janela
- * (IntersectionObserver, sem medir layout a cada frame). No celular, cada passo leva a própria tela.
+ * Três passos numerados (uma sequência de verdade). Os passos avançam sozinhos enquanto a seção está na tela;
+ * clicar em um passo mostra a tela dele. O traço sob o passo ativo marca o tempo até o próximo.
  */
 export function HowItWorks() {
   const [active, setActive] = useState(0);
-  const refs = useRef<(HTMLDivElement | null)[]>([]);
+  const [cycle, setCycle] = useState(0); // reinicia a barra ao clicar
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { margin: "-20% 0px -20% 0px" });
 
   useEffect(() => {
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) setActive(Number((e.target as HTMLElement).dataset.step));
-        }
-      },
-      { rootMargin: "-45% 0px -45% 0px" },
-    );
-    refs.current.forEach((el) => el && io.observe(el));
-    return () => io.disconnect();
-  }, []);
+    if (!inView) return;
+    const t = window.setTimeout(() => setActive((a) => (a + 1) % STEPS.length), STEP_MS);
+    return () => window.clearTimeout(t);
+  }, [inView, active, cycle]);
 
   const Screen = SCREENS[active];
 
   return (
-    <section id="como-funciona" className="relative py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl">
-          <SlotLabel time="09:30">Como funciona</SlotLabel>
-          <h2 className="font-display mt-5 text-4xl font-extrabold leading-[1.02] tracking-tightest text-tinta sm:text-5xl lg:text-6xl">
-            <SplitWords text="No ar hoje, ==em cinco minutos.==" />
-          </h2>
-          <Reveal>
-            <p className="mt-5 max-w-xl text-[17px] leading-relaxed text-tinta-2">Três passos, tudo pelo celular. Sem instalação, sem curva de aprendizado e sem precisar de ninguém para configurar.</p>
-          </Reveal>
-        </div>
+    <section id="como-funciona" className="relative bg-nevoa py-24 sm:py-32 lg:py-36">
+      <div className="container-x">
+        <SectionHead title={["No ar hoje,", "em cinco minutos."]} intro="Tudo pelo celular. Sem instalação, sem curva de aprendizado e sem precisar de ninguém para configurar." />
 
-        <div className="mt-14 grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)] lg:gap-16">
-          <div className="min-w-0">
-            {STEPS.map((s, i) => (
-              <div
-                key={s.n}
-                ref={(el) => (refs.current[i] = el)}
-                data-step={i}
-                className="flex min-h-0 flex-col justify-center border-t border-linha py-10 first:border-t-0 lg:min-h-[62vh] lg:py-0"
-              >
-                <div className="flex items-start gap-5 sm:gap-7">
-                  <span
-                    className={`font-display tnum grid h-14 w-14 shrink-0 place-items-center rounded-2xl text-2xl font-extrabold transition-colors duration-500 sm:h-16 sm:w-16 sm:text-3xl ${
-                      active === i ? "bg-roxo-600 text-white shadow-roxo" : "bg-roxo-100 text-roxo-700"
-                    }`}
+        <div ref={ref} className="mt-14 grid grid-cols-[minmax(0,1fr)] items-center gap-12 lg:mt-20 lg:grid-cols-12 lg:gap-8">
+          <ol className="lg:col-span-5">
+            {STEPS.map((s, i) => {
+              const on = active === i;
+              return (
+                <li key={s.n} className="border-t border-linha last:border-b">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setActive(i);
+                      setCycle((c) => c + 1);
+                    }}
+                    aria-current={on ? "step" : undefined}
+                    className="relative block w-full py-7 text-left"
                   >
-                    {s.n}
-                  </span>
-                  <div className="min-w-0">
-                    <h3 className="font-display text-3xl font-bold tracking-tight text-tinta sm:text-4xl">{s.title}</h3>
-                    <p className="mt-3 max-w-md text-[17px] leading-relaxed text-tinta-2">{s.text}</p>
-                  </div>
-                </div>
-                {/* Celular: cada passo mostra a própria tela */}
-                <div className="mt-8 lg:hidden">
-                  <PhoneFrame className="max-w-[250px]">
-                    {i === 0 ? <OwnerScreenSignup /> : i === 1 ? <OwnerScreenServices /> : <OwnerScreenShare />}
-                  </PhoneFrame>
-                </div>
-              </div>
-            ))}
-            <div className="pt-6">
-              <PrimaryCta location="como_funciona" />
-            </div>
-          </div>
+                    <span className="flex items-baseline gap-5">
+                      <span className={`font-display tnum text-[15px] transition-colors duration-500 ${on ? "text-roxo-600" : "text-tinta-3"}`}>0{s.n}</span>
+                      <span className="min-w-0">
+                        <span className={`font-display block text-[1.7rem] leading-tight tracking-[-0.01em] transition-colors duration-500 ${on ? "text-tinta" : "text-tinta-3"}`}>{s.title}</span>
+                        <AnimatePresence initial={false}>
+                          {on && (
+                            <motion.span
+                              className="block overflow-hidden"
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.5, ease: EASE_OUT }}
+                            >
+                              <span className="block pt-3 text-[16px] leading-relaxed text-tinta-2">{s.text}</span>
+                            </motion.span>
+                          )}
+                        </AnimatePresence>
+                      </span>
+                    </span>
+                    {on && (
+                      <motion.span
+                        key={`${active}-${cycle}-${inView}`}
+                        className="absolute -top-px left-0 h-px bg-tinta"
+                        initial={{ width: "0%" }}
+                        animate={{ width: inView ? "100%" : "0%" }}
+                        transition={{ duration: STEP_MS / 1000, ease: "linear" }}
+                      />
+                    )}
+                  </button>
+                </li>
+              );
+            })}
+          </ol>
 
-          {/* Desktop: palco fixo */}
-          <div className="relative hidden lg:block">
-            <div className="sticky top-[14vh]">
-              <div className="glow absolute left-1/2 top-1/2 h-[560px] w-[560px] -translate-x-1/2 -translate-y-1/2 [--glow:124_58_237] [--glow-a:0.14]" />
-              <PhoneFrame className="max-w-[300px]">
+          <Reveal className="lg:col-span-6 lg:col-start-7" delay={0.1}>
+            <div className="grid place-items-center">
+              <PhoneFrame className="max-w-[270px]">
                 <AnimatePresence mode="popLayout" initial={false}>
                   <motion.div
                     key={active}
                     className="absolute inset-0"
-                    initial={{ y: "18%", opacity: 0 }}
-                    animate={{ y: "0%", opacity: 1 }}
-                    exit={{ y: "-12%", opacity: 0 }}
+                    initial={{ opacity: 0, y: 24 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -16 }}
                     transition={{ duration: 0.6, ease: EASE_OUT }}
                   >
                     <Screen />
                   </motion.div>
                 </AnimatePresence>
               </PhoneFrame>
-              <div className="mt-6 flex justify-center gap-2">
-                {STEPS.map((s, i) => (
-                  <span key={s.n} className={`h-1.5 rounded-full transition-all duration-500 ${active === i ? "w-8 bg-roxo-600" : "w-3 bg-roxo-200"}`} />
-                ))}
-              </div>
             </div>
-          </div>
+          </Reveal>
         </div>
+
+        <Reveal className="mt-14">
+          <PrimaryCta location="como_funciona" />
+        </Reveal>
       </div>
     </section>
   );

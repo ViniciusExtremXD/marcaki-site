@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "@fontsource-variable/inter";
-import "@fontsource-variable/bricolage-grotesque";
+import "@fontsource-variable/hanken-grotesk";
+import "@fontsource-variable/newsreader/opsz.css";
 import "./styles.css";
 import App from "./App";
 

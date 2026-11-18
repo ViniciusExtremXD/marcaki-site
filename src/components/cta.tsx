@@ -1,7 +1,5 @@
 import React from "react";
-import { ArrowUpRight, Eye } from "@phosphor-icons/react";
 import { LINKS, pushEvent } from "../data/site";
-import { Magnetic } from "./motion";
 
 /*
  * Todo CTA é um <a> real para marcaki.app (gatilho de clique em link do GTM funciona).
@@ -60,55 +58,51 @@ export function LoginLink({ location, children, ...rest }: AnchorProps & { locat
   );
 }
 
-/* Botão principal: preenchimento que varre da esquerda e seta que troca de lugar. */
+/* Botões institucionais: pílula sólida (principal) e contorno (secundário). */
 export function PrimaryCta({
   location,
-  children = "Criar minha página grátis",
-  size = "lg",
-  tone = "roxo",
+  children = "Criar conta grátis",
+  tone = "dark",
   className,
 }: {
   location: string;
   children?: React.ReactNode;
-  size?: "md" | "lg";
-  tone?: "roxo" | "marca" | "white";
+  tone?: "dark" | "roxo" | "white";
   className?: string;
 }) {
-  const pad = size === "lg" ? "h-14 pl-6 pr-2 text-[15px] sm:text-base" : "h-12 pl-5 pr-1.5 text-[15px]";
-  const dot = size === "lg" ? "h-10 w-10" : "h-9 w-9";
   const colors = {
-    roxo: { base: "bg-roxo-600 text-white shadow-roxo", sweep: "bg-roxo-800", dot: "bg-marca text-tinta" },
-    marca: { base: "bg-marca text-tinta", sweep: "bg-white", dot: "bg-tinta text-marca" },
-    white: { base: "bg-white text-tinta", sweep: "bg-marca", dot: "bg-roxo-600 text-white" },
+    dark: "bg-tinta text-white hover:bg-roxo-700",
+    roxo: "bg-roxo-600 text-white hover:bg-roxo-700",
+    white: "bg-white text-tinta hover:bg-roxo-100",
   }[tone];
   return (
-    <Magnetic strength={0.2}>
-      <SignupLink
-        location={location}
-        className={`group relative inline-flex max-w-full items-center gap-4 overflow-hidden whitespace-nowrap rounded-full font-semibold ${colors.base} ${pad} ${className ?? ""}`}
-      >
-        <span className={`absolute inset-0 origin-left scale-x-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100 ${colors.sweep}`} />
-        <span className="relative truncate">{children}</span>
-        <span className={`relative grid shrink-0 place-items-center overflow-hidden rounded-full ${colors.dot} ${dot}`}>
-          <ArrowUpRight weight="bold" className="h-4 w-4 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-6 group-hover:translate-x-6" />
-          <ArrowUpRight weight="bold" className="absolute h-4 w-4 -translate-x-6 translate-y-6 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0 group-hover:translate-y-0" />
-        </span>
-      </SignupLink>
-    </Magnetic>
+    <SignupLink
+      location={location}
+      className={`inline-flex h-[52px] max-w-full items-center justify-center whitespace-nowrap rounded-full px-7 text-[15.5px] font-medium transition-colors duration-300 ${colors} ${className ?? ""}`}
+    >
+      <span className="truncate">{children}</span>
+    </SignupLink>
   );
 }
 
-export function DemoCta({ location, tone = "light", className }: { location: string; tone?: "dark" | "light"; className?: string }) {
-  const colors =
-    tone === "dark"
-      ? "border-white/20 text-white hover:border-white/50 hover:bg-white/5"
-      : "border-roxo-600/20 bg-white/60 text-tinta hover:border-roxo-600/50 hover:bg-white";
+export function DemoCta({
+  location,
+  tone = "light",
+  className,
+  children = "Ver uma página de exemplo",
+}: {
+  location: string;
+  tone?: "dark" | "light";
+  className?: string;
+  children?: React.ReactNode;
+}) {
+  const colors = tone === "dark" ? "border-white/25 text-white hover:border-white/70" : "border-tinta/20 text-tinta hover:border-tinta/70";
   return (
-    <Magnetic strength={0.16}>
-      <DemoLink location={location} className={`group inline-flex h-14 max-w-full items-center gap-2.5 whitespace-nowrap rounded-full border px-6 text-[15px] font-semibold transition-colors sm:text-base ${colors} ${className ?? ""}`}>
-        <Eye weight="bold" className="h-[18px] w-[18px] shrink-0 transition-transform duration-300 group-hover:scale-110" />
-        <span className="truncate">Ver uma página de exemplo</span>
-      </DemoLink>
-    </Magnetic>
+    <DemoLink
+      location={location}
+      className={`inline-flex h-[52px] max-w-full items-center justify-center whitespace-nowrap rounded-full border px-7 text-[15.5px] font-medium transition-colors duration-300 ${colors} ${className ?? ""}`}
+    >
+      <span className="truncate">{children}</span>
+    </DemoLink>
   );
 }

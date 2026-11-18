@@ -29,7 +29,7 @@ function BizHeader({ compact = false }: { compact?: boolean }) {
         <span className="grid h-7 w-7 place-items-center rounded-lg bg-roxo-600 text-[13px] font-bold text-white">S</span>
         <span className="rounded-full bg-roxo-100 px-2 py-0.5 text-[10px] font-semibold text-roxo-700">{DEMO_BUSINESS.type}</span>
       </div>
-      <p className="font-display mt-2 text-[19px] font-bold leading-tight tracking-tight text-tinta">{DEMO_BUSINESS.name}</p>
+      <p className="font-ui mt-2 text-[19px] font-bold leading-tight tracking-tight text-tinta">{DEMO_BUSINESS.name}</p>
       {!compact && <p className="text-[11px] text-tinta-2">{DEMO_BUSINESS.tagline}</p>}
     </div>
   );
@@ -99,7 +99,7 @@ function ScreenTime({ picked }: { picked: boolean }) {
         ].map(([d, n], i) => (
           <div key={n} className={`grid w-[52px] shrink-0 place-items-center rounded-xl border py-1.5 ${i === 1 ? "border-tinta bg-tinta text-white" : "border-linha text-tinta-2"}`}>
             <span className="text-[9.5px] uppercase">{d}</span>
-            <span className="tnum font-display text-[15px] font-bold leading-none">{n}</span>
+            <span className="tnum font-ui text-[15px] font-bold leading-none">{n}</span>
           </div>
         ))}
       </div>
@@ -174,7 +174,7 @@ function ScreenDone() {
       >
         <Check weight="bold" className="h-8 w-8" />
       </motion.span>
-      <p className="font-display mt-4 text-[24px] font-extrabold leading-none tracking-tight text-tinta">
+      <p className="font-ui mt-4 text-[24px] font-extrabold leading-none tracking-tight text-tinta">
         <span className="mk">Tá marcado.</span>
       </p>
       <p className="mt-2 text-[11px] leading-snug text-tinta-2">Mandamos a confirmação no seu WhatsApp.</p>
@@ -360,7 +360,7 @@ export function AgendaBoard({ className, dark = false, label = "Qui, 19 nov" }: 
 export function OwnerScreenSignup() {
   return (
     <div className="flex h-full flex-col px-4 pt-12">
-      <p className="font-display text-[20px] font-bold leading-tight tracking-tight text-tinta">Crie sua página</p>
+      <p className="font-ui text-[20px] font-bold leading-tight tracking-tight text-tinta">Crie sua página</p>
       <p className="text-[11px] text-tinta-2">Leva um minuto.</p>
       <div className="mt-4 grid gap-2.5">
         <Labeled label="Nome do negócio" value="Salão da Maria" />
@@ -390,7 +390,7 @@ function Labeled({ label, value, chip }: { label: string; value: string; chip?: 
 export function OwnerScreenServices() {
   return (
     <div className="flex h-full flex-col px-4 pt-12">
-      <p className="font-display text-[20px] font-bold leading-tight tracking-tight text-tinta">Serviços</p>
+      <p className="font-ui text-[20px] font-bold leading-tight tracking-tight text-tinta">Serviços</p>
       <div className="mt-3 grid gap-1.5">
         {DEMO_BUSINESS.services.slice(0, 4).map((s) => (
           <div key={s.name} className="flex items-center justify-between gap-2 rounded-xl border border-linha px-3 py-2">
@@ -401,7 +401,7 @@ export function OwnerScreenServices() {
           </div>
         ))}
       </div>
-      <p className="font-display mt-4 text-[15px] font-bold text-tinta">Horário de funcionamento</p>
+      <p className="font-ui mt-4 text-[15px] font-bold text-tinta">Horário de funcionamento</p>
       <div className="mt-2 grid gap-1">
         {[
           ["Ter a sex", "09:00 – 19:00"],
@@ -421,7 +421,7 @@ export function OwnerScreenServices() {
 export function OwnerScreenShare() {
   return (
     <div className="flex h-full flex-col px-4 pt-12">
-      <p className="font-display text-[20px] font-bold leading-tight tracking-tight text-tinta">
+      <p className="font-ui text-[20px] font-bold leading-tight tracking-tight text-tinta">
         Sua página <span className="mk">está no ar</span>
       </p>
       <div className="mt-3 flex min-w-0 items-center gap-2 rounded-xl border border-linha bg-roxo-50 px-3 py-2.5">

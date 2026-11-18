@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Check } from "@phosphor-icons/react";
 import { INCLUDED, PRICE, pushEvent } from "../data/site";
 import { calcResults, useCalc } from "../lib/calc-store";
-import { Counter, Reveal, SlotLabel, SplitWords } from "../components/motion";
+import { Counter, Lines, Reveal } from "../components/motion";
 import { PrimaryCta } from "../components/cta";
 
 type Billing = "mensal" | "anual";
@@ -22,32 +22,31 @@ export function Pricing() {
   };
 
   return (
-    <section id="preco" className="relative overflow-hidden bg-roxo-900 py-24 text-white sm:py-32">
-      <div className="glow pointer-events-none absolute -left-40 top-0 h-[620px] w-[620px] [--glow:124_58_237] [--glow-a:0.55]" />
-      <div className="glow pointer-events-none absolute -right-32 bottom-0 h-[420px] w-[420px] [--glow:255_225_77] [--glow-a:0.12]" />
-      <div className="relative mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-12 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center lg:px-8">
-        <div className="min-w-0">
-          <SlotLabel time="11:00" tone="dark">
-            Preço
-          </SlotLabel>
-          <h2 className="font-display mt-5 text-4xl font-extrabold leading-[1.02] tracking-tightest sm:text-5xl lg:text-6xl">
-            <SplitWords text="Se paga com ==os horários que você salva.==" wordClassName="text-white" dark />
+    <section id="preco" className="relative bg-noite py-24 text-white sm:py-32 lg:py-36">
+      <div className="container-x grid grid-cols-[minmax(0,1fr)] gap-14 lg:grid-cols-12 lg:gap-8">
+        <div className="min-w-0 lg:col-span-5">
+          <h2 className="font-display text-[2.35rem] font-normal leading-[1.04] tracking-[-0.02em] sm:text-5xl lg:text-[3.6rem]">
+            <Lines lines={["Um preço só.", "Tudo incluso."]} />
           </h2>
-          <Reveal>
-            <p className="mt-5 max-w-md text-[17px] leading-relaxed text-roxo-100">
-              Plano único, com tudo incluso. Um ou dois horários salvos no mês já pagam o plano. Teste {PRICE.trialDays} dias grátis, sem cartão de crédito, sem fidelidade e sem multa para cancelar.
+          <Reveal delay={0.1}>
+            <p className="mt-6 max-w-md text-[17px] leading-relaxed text-white/70">
+              Sem taxa de adesão, sem fidelidade e sem multa para cancelar. Teste {PRICE.trialDays} dias grátis, sem cartão de crédito.
             </p>
+            <a href="#a-conta" className="mt-10 block max-w-md border-t border-white/15 pt-6 text-[16px] leading-relaxed text-white/85 transition-colors hover:text-white">
+              Com atendimento médio de <span className="tnum">R$ {calc.ticket.toLocaleString("pt-BR")}</span>,{" "}
+              {payback === 1 ? "um horário salvo no mês já paga o plano." : `${payback} horários salvos no mês já pagam o plano.`}{" "}
+              <span className="text-white underline decoration-white/40 underline-offset-4">Refazer a conta</span>
+            </a>
           </Reveal>
         </div>
 
-        <Reveal className="min-w-0" delay={0.1}>
-          <div className="rounded-[28px] bg-white p-6 text-tinta shadow-lift sm:p-9">
-            {/* Alternar mensal/anual */}
-            <div role="radiogroup" aria-label="Forma de pagamento" className="relative grid grid-cols-2 rounded-full bg-roxo-100 p-1">
+        <Reveal className="min-w-0 lg:col-span-6 lg:col-start-7" delay={0.1}>
+          <div className="rounded-[20px] bg-white p-6 text-tinta sm:p-10">
+            <div role="radiogroup" aria-label="Forma de pagamento" className="relative grid grid-cols-2 rounded-full border border-linha p-1">
               <motion.span
-                className="absolute inset-y-1 left-1 w-[calc(50%-4px)] rounded-full bg-white shadow-soft"
+                className="absolute inset-y-1 left-1 w-[calc(50%-4px)] rounded-full bg-tinta"
                 animate={{ x: yearly ? "100%" : "0%" }}
-                transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                transition={{ type: "spring", stiffness: 380, damping: 36 }}
               />
               {(["mensal", "anual"] as Billing[]).map((b) => (
                 <button
@@ -56,59 +55,46 @@ export function Pricing() {
                   role="radio"
                   aria-checked={billing === b}
                   onClick={() => choose(b)}
-                  className={`relative z-10 flex h-11 items-center justify-center gap-2 rounded-full text-[15px] font-semibold capitalize transition-colors ${billing === b ? "text-tinta" : "text-tinta-2"}`}
+                  className={`relative z-10 h-10 rounded-full text-[15px] font-medium capitalize transition-colors duration-300 ${billing === b ? "text-white" : "text-tinta-2"}`}
                 >
                   {b}
-                  {b === "anual" && <span className="hidden rounded-full bg-marca px-2 py-0.5 text-[11px] font-bold normal-case text-tinta min-[400px]:inline-block">2 meses grátis</span>}
                 </button>
               ))}
             </div>
 
-            <p className="mt-2 text-center text-[12.5px] font-semibold text-tinta-2 min-[400px]:hidden">
-              No anual, <span className="mk">2 meses saem grátis</span>.
-            </p>
-
-            <div className="mt-8">
+            <div className="mt-9">
               <p className="flex flex-wrap items-baseline gap-x-2">
-                <span className="font-display text-2xl font-bold text-tinta-2">R$</span>
-                <span className="font-display text-[4.2rem] font-extrabold leading-none tracking-tightest text-tinta sm:text-[5rem]">
+                <span className="font-display text-2xl text-tinta-2">R$</span>
+                <span className="font-display text-[4.2rem] leading-none tracking-[-0.03em] text-tinta sm:text-[5.2rem]">
                   <Counter to={yearly ? PRICE.yearly : PRICE.monthly} decimals={yearly ? 0 : 2} duration={0.7} />
                 </span>
-                <span className="text-lg font-semibold text-tinta-2">/{yearly ? "ano" : "mês"}</span>
+                <span className="text-[17px] text-tinta-2">/{yearly ? "ano" : "mês"}</span>
               </p>
-              <p className="mt-2 h-6 text-[15px] text-tinta-2">
+              <p className="mt-3 min-h-[1.5rem] text-[15px] text-tinta-2">
                 {yearly ? (
                   <>
-                    equivale a <b className="tnum text-roxo-700">R$ 41,58/mês</b>
+                    Equivale a <span className="tnum text-tinta">R$ 41,58 por mês</span>: dois meses grátis.
                   </>
                 ) : (
-                  <>ou R$ 499 por ano, o equivalente a dois meses grátis</>
+                  <>Ou R$ 499 por ano, o equivalente a dois meses grátis.</>
                 )}
               </p>
             </div>
 
-            <a href="#a-conta" className="mt-5 flex items-center gap-3 rounded-2xl bg-marca/60 px-4 py-3 text-[14px] leading-snug text-tinta transition-colors hover:bg-marca">
-              <span className="font-display tnum grid h-9 w-9 shrink-0 place-items-center rounded-full bg-tinta text-[15px] font-extrabold text-marca">{payback}</span>
-              <span>
-                Com atendimento médio de <b className="tnum">R$ {calc.ticket.toLocaleString("pt-BR")}</b>, {payback === 1 ? "um atendimento paga" : `${payback} atendimentos pagam`} o mês.{" "}
-                <span className="font-semibold text-roxo-700 underline decoration-roxo-300 underline-offset-2">Refazer a conta</span>
-              </span>
-            </a>
-
-            <ul className="mt-7 grid gap-3 border-t border-linha pt-7">
+            <ul className="mt-8 grid gap-3.5 border-t border-linha pt-8">
               {INCLUDED.map((t) => (
-                <li key={t} className="flex gap-3 text-[15px] text-tinta">
-                  <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-roxo-600 text-white">
-                    <Check weight="bold" className="h-3 w-3" />
-                  </span>
+                <li key={t} className="flex gap-3 text-[15.5px] leading-snug text-tinta">
+                  <Check weight="bold" className="mt-1 h-3.5 w-3.5 shrink-0 text-roxo-600" />
                   {t}
                 </li>
               ))}
             </ul>
 
-            <div className="mt-8 flex flex-col items-start gap-3">
-              <PrimaryCta location="preco">Começar teste grátis</PrimaryCta>
-              <p className="text-[13px] text-tinta-2">{PRICE.trialDays} dias grátis · sem cartão · cancele quando quiser</p>
+            <div className="mt-9">
+              <PrimaryCta location="preco" className="w-full">
+                Começar teste grátis
+              </PrimaryCta>
+              <p className="mt-3 text-center text-[13.5px] text-tinta-2">{PRICE.trialDays} dias grátis, sem cartão de crédito.</p>
             </div>
           </div>
         </Reveal>

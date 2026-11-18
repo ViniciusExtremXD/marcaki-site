@@ -13,7 +13,7 @@ import {
 } from "framer-motion";
 import { useElementProgress } from "../lib/scroll-progress";
 
-export const EASE_OUT = [0.16, 1, 0.3, 1] as const;
+export const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 export const EASE_IN_OUT = [0.65, 0, 0.35, 1] as const;
 /* "Encaixe": o horário cai no lugar com um pequeno quique (Livro da Marca, Movimento). */
 export const SNAP = { type: "spring", stiffness: 520, damping: 26, mass: 0.7 } as const;
@@ -22,7 +22,7 @@ export const SNAP = { type: "spring", stiffness: 520, damping: 26, mass: 0.7 } a
 export function Reveal({
   children,
   delay = 0,
-  y = 28,
+  y = 18,
   className,
   as = "div",
 }: {
@@ -38,8 +38,8 @@ export function Reveal({
       className={className}
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "0px 0px -12% 0px" }}
-      transition={{ duration: 0.9, ease: EASE_OUT, delay }}
+      viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+      transition={{ duration: 1.0, ease: EASE_OUT, delay }}
     >
       {children}
     </Comp>
@@ -402,4 +402,56 @@ export function useCycle(ref: React.RefObject<Element>, steps: number[], start =
     return () => window.clearTimeout(t);
   }, [inView, start, step, steps]);
   return step;
+}
+
+/*
+ * Título em linhas que sobem de dentro de uma máscara, uma de cada vez.
+ * Usado só nos títulos de seção e no topo (o "momento" de movimento do site).
+ */
+export function Lines({ lines, className, delay = 0, immediate = false }: { lines: string[]; className?: string; delay?: number; immediate?: boolean }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: "0px 0px -10% 0px" });
+  const show = immediate || inView;
+  return (
+    <span ref={ref} className={className} aria-label={lines.join(" ")} role="text">
+      {lines.map((line, i) => (
+        <span key={i} aria-hidden className="block overflow-hidden pb-[0.08em]">
+          <motion.span
+            className="block"
+            initial={{ y: "105%" }}
+            animate={show ? { y: "0%" } : undefined}
+            transition={{ duration: 1.1, ease: EASE_OUT, delay: delay + i * 0.09 }}
+          >
+            {line}
+          </motion.span>
+        </span>
+      ))}
+    </span>
+  );
+}
+
+/* Cabeçalho de seção: título à esquerda, texto de apoio à direita, alinhados pela base. */
+export function SectionHead({
+  title,
+  intro,
+  dark = false,
+  className,
+}: {
+  title: string[];
+  intro?: React.ReactNode;
+  dark?: boolean;
+  className?: string;
+}) {
+  return (
+    <div className={`grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-12 lg:items-end lg:gap-8 ${className ?? ""}`}>
+      <h2 className={`font-display text-[2.35rem] font-normal leading-[1.04] tracking-[-0.02em] sm:text-5xl lg:col-span-7 lg:text-[3.6rem] ${dark ? "text-white" : "text-tinta"}`}>
+        <Lines lines={title} />
+      </h2>
+      {intro && (
+        <Reveal className="lg:col-span-4 lg:col-start-9" delay={0.15}>
+          <p className={`text-[17px] leading-relaxed ${dark ? "text-white/70" : "text-tinta-2"}`}>{intro}</p>
+        </Reveal>
+      )}
+    </div>
+  );
 }
